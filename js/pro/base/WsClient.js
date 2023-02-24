@@ -8,7 +8,7 @@ const functions = require ("../../base/functions.js")
     } = functions
     , Client = require ('./Client')
     // eslint-disable-next-line
-    , WebSocket = isNode ? require ('ws') : self.WebSocket
+    , WebSocket = isNode ? require ('ws').WebSocket : self.WebSocket
 
 module.exports = class WsClient extends Client {
 
@@ -31,7 +31,9 @@ module.exports = class WsClient extends Client {
         if (isNode) {
             this.connection
                 .on ('ping', this.onPing.bind (this))
+            this.connection
                 .on ('pong', this.onPong.bind (this))
+            this.connection
                 .on ('upgrade', this.onUpgrade.bind (this))
         }
         // this.connection.terminate () // debugging
